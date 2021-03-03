@@ -1,10 +1,6 @@
 #adapted from
 #https://www.r-bloggers.com/2017/07/ggplot2-easy-way-to-mix-multiple-graphs-on-the-same-page/
 
-
-p <- plot(iris)
-
-
 plot(iris)
 
 #Using build in tools in Rstudio 
@@ -50,29 +46,26 @@ ggsave("ggplot2save.pdf")
 
 #################################################################
 #Changing Image size and DPI 
-ggsave("ggplot2save.jpg", width = 10, height = 8, units = c("cm"))
+ggsave("ggplot2save.jpg", width = 10, height = 8, units = c("in"))
 
 ggsave("ggplot2save.jpg", width = 10, height = 8, units = c("cm"), dpi = 300)
 
 ##plotting mulitple graph onto the same image using ggrid()
 ##################################################################
 #base R
-jpeg("hist_gpa_sat.jpg")
-par(mfrow=c(2,1))
-hist(gpa)
-hist(sat)
+jpeg("Base.R.Multiple.jpg")
+par(mfrow=c(1,2))
+hist(rnorm(200))
+hist(rnorm(200))
 dev.off()
+
 
 #using ggpubr
 library(ggpubr)
 p <- ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width)) + geom_point()
-
 q <- ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width)) + geom_line()
-
 r <- ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width)) + geom_jitter()
-
 s <- ggplot(iris,aes(x=Petal.Length,y=Petal.Width)) + geom_jitter()
-
 
 ggarrange(p, q, r,s , 
           labels = c("A", "B", "C", "D"),
@@ -82,7 +75,7 @@ ggsave("ggpubrsave.jpg", width = 20, height = 16, units = c("cm"), dpi = 300)
 
 
 ###################################################################
-#Using corplot
+#Using cowplot
 library("cowplot")
 ggdraw() +
   draw_plot(p, x = 0, y = .5, width = .5, height = .5) +
